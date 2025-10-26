@@ -21,8 +21,7 @@
       "type": "image/svg+xml",
       "purpose": "any maskable"
     }
-  ]
-}
+  ],
   "developer": {
     "name": "Santosh Phuyal",
     "email": "xyz@gmail.com"
@@ -41,5 +40,4 @@
     "Multi-currency Support",
     "Offline-first PWA"
   ]
-
 }
