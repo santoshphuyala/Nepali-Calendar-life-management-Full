@@ -1,0 +1,510 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="Complete Nepali Calendar with Finance, Insurance, Vehicle, Subscription Management">
+    <meta name="theme-color" content="#4A90E2">
+    <title>Nepali Calendar 2082–2092 - Complete Manager</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='75' font-size='80'>📅</text></svg>">
+</head>
+<body>
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1>📅 Nepali Calendar</h1>
+            <div class="header-dates">
+                <div class="bs-date" id="headerBSDate">BS: Loading...</div>
+                <div class="ad-date" id="headerADDate">AD: Loading...</div>
+            </div>
+        </div>
+        <button class="today-btn" id="todayBtn">📍 Today</button>
+    </header>
+
+    <!-- Navigation Tabs -->
+    <nav class="nav-tabs">
+        <button class="nav-tab active" data-view="calendar">📅 Calendar</button>
+        <button class="nav-tab" data-view="tracker">💰 Tracker</button>
+        <button class="nav-tab" data-view="budget">📊 Budget</button>
+        <button class="nav-tab" data-view="bills">💳 Bills</button>
+        <button class="nav-tab" data-view="goals">🎯 Goals</button>
+        <button class="nav-tab" data-view="insurance">🛡️ Insurance</button>
+        <button class="nav-tab" data-view="vehicle">🚗 Vehicle</button>
+        <button class="nav-tab" data-view="subscription">📺 Subscriptions</button>
+        <button class="nav-tab" data-view="custom">📋 Custom</button>
+        <button class="nav-tab" data-view="shopping">🛒 Shopping</button>
+        <button class="nav-tab" data-view="notes">📝 Notes</button>
+        <button class="nav-tab" data-view="settings">⚙️ Settings</button>
+    </nav>
+
+    <!-- Main Container -->
+    <main class="main-container">
+        
+        <!-- Calendar View -->
+        <section id="calendarView" class="view active">
+            <!-- View Switcher -->
+            <div class="view-switcher">
+                <button class="view-switch-btn active" data-calendar-view="month">Month</button>
+                <button class="view-switch-btn" data-calendar-view="week">Week</button>
+                <button class="view-switch-btn" data-calendar-view="day">Day</button>
+            </div>
+
+            <!-- Calendar Controls -->
+            <div class="calendar-controls">
+                <button id="prevMonth">◀</button>
+                <div class="date-selector">
+                    <select id="yearSelect"></select>
+                    <select id="monthSelect"></select>
+                </div>
+                <button id="nextMonth">▶</button>
+            </div>
+
+            <!-- Month View -->
+            <div id="monthView" class="calendar-view-container active">
+                <div class="calendar-grid" id="calendarGrid">
+                    <div class="day-header">Sun</div>
+                    <div class="day-header">Mon</div>
+                    <div class="day-header">Tue</div>
+                    <div class="day-header">Wed</div>
+                    <div class="day-header">Thu</div>
+                    <div class="day-header">Fri</div>
+                    <div class="day-header">Sat</div>
+                </div>
+            </div>
+
+            <!-- Week View -->
+            <div id="weekView" class="calendar-view-container">
+                <div class="week-grid" id="weekGrid"></div>
+            </div>
+
+            <!-- Day View -->
+            <div id="dayView" class="calendar-view-container">
+                <div class="day-detail" id="dayDetail"></div>
+            </div>
+
+            <!-- Monthly Summary Dashboard -->
+            <div class="dashboard">
+                <h3>📊 Monthly Summary</h3>
+                <div class="summary-cards">
+                    <div class="summary-card income">
+                        <span class="label">Income</span>
+                        <span class="value" id="monthlyIncome">Rs. 0</span>
+                    </div>
+                    <div class="summary-card expense">
+                        <span class="label">Expenses</span>
+                        <span class="value" id="monthlyExpense">Rs. 0</span>
+                    </div>
+                    <div class="summary-card savings">
+                        <span class="label">Savings</span>
+                        <span class="value" id="monthlySavings">Rs. 0</span>
+                    </div>
+                    <div class="summary-card budget">
+                        <span class="label">Budget Left</span>
+                        <span class="value" id="budgetRemaining">Rs. 0</span>
+                    </div>
+                </div>
+                
+                <!-- Charts Section -->
+                <div class="charts-section">
+                    <div class="chart-container">
+                        <h4>Income vs Expense Trend</h4>
+                        <canvas id="trendChart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h4>Expense by Category</h4>
+                        <canvas id="categoryChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Tracker View -->
+        <section id="trackerView" class="view">
+            <div class="tracker-header">
+                <h2>💰 Income & Expense Tracker</h2>
+                <div class="tracker-actions">
+                    <button class="btn-primary" id="addIncomeBtn">+ Income</button>
+                    <button class="btn-danger" id="addExpenseBtn">+ Expense</button>
+                    <button class="btn-secondary" id="addRecurringBtn">🔄 Recurring</button>
+                    <button class="btn-secondary" id="exportTrackerBtn">📤 Export</button>
+                </div>
+            </div>
+            
+            <div class="filter-section">
+                <select id="trackerFilter">
+                    <option value="all">All Transactions</option>
+                    <option value="income">Income Only</option>
+                    <option value="expense">Expense Only</option>
+                    <option value="recurring">Recurring Only</option>
+                </select>
+                <input type="month" id="trackerMonth" class="month-filter">
+                <select id="currencyFilter">
+                    <option value="NPR">NPR (रू)</option>
+                    <option value="USD">USD ($)</option>
+                    <option value="EUR">EUR (€)</option>
+                    <option value="INR">INR (₹)</option>
+                </select>
+            </div>
+
+            <div class="recurring-section" id="recurringSection">
+                <h3>🔄 Recurring Transactions</h3>
+                <div id="recurringList"></div>
+            </div>
+
+            <div class="tracker-list" id="trackerList"></div>
+        </section>
+
+        <!-- Budget View -->
+        <section id="budgetView" class="view">
+            <div class="budget-header">
+                <h2>📊 Budget Planning</h2>
+                <button class="btn-primary" id="addBudgetBtn">+ Set Budget</button>
+            </div>
+
+            <div class="budget-overview">
+                <div class="budget-summary-card">
+                    <h3>Current Month Budget</h3>
+                    <div class="budget-progress">
+                        <div class="progress-info">
+                            <span>Spent: <strong id="budgetSpent">Rs. 0</strong></span>
+                            <span>Budget: <strong id="budgetTotal">Rs. 0</strong></span>
+                        </div>
+                        <div class="progress-bar">
+                            <div class="progress-fill" id="budgetProgress"></div>
+                        </div>
+                        <div class="progress-percentage" id="budgetPercentage">0%</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="budget-categories" id="budgetCategories"></div>
+
+            <div class="budget-chart-container">
+                <h3>Budget vs Actual</h3>
+                <canvas id="budgetChart"></canvas>
+            </div>
+        </section>
+
+        <!-- Bills View -->
+        <section id="billsView" class="view">
+            <div class="bills-header">
+                <h2>💳 Bill Reminders</h2>
+                <button class="btn-primary" id="addBillBtn">+ Add Bill</button>
+            </div>
+
+            <div class="upcoming-bills">
+                <h3>⏰ Upcoming Bills</h3>
+                <div id="upcomingBillsList"></div>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="paid">Paid</button>
+                <button class="filter-btn" data-filter="overdue">Overdue</button>
+            </div>
+
+            <div class="bills-list" id="billsList"></div>
+        </section>
+
+        <!-- Goals View -->
+        <section id="goalsView" class="view">
+            <div class="goals-header">
+                <h2>🎯 Savings Goals</h2>
+                <button class="btn-primary" id="addGoalBtn">+ New Goal</button>
+            </div>
+            <div class="goals-grid" id="goalsGrid"></div>
+        </section>
+
+        <!-- Insurance View (NEW) -->
+        <section id="insuranceView" class="view">
+            <div class="insurance-header">
+                <h2>🛡️ Insurance Manager</h2>
+                <button class="btn-primary" id="addInsuranceBtn">+ Add Policy</button>
+            </div>
+
+            <div class="insurance-stats">
+                <div class="stat-card">
+                    <span class="stat-label">Total Policies</span>
+                    <span class="stat-value" id="totalPolicies">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Active Policies</span>
+                    <span class="stat-value" id="activePolicies">0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Annual Premium</span>
+                    <span class="stat-value" id="totalPremium">Rs. 0</span>
+                </div>
+                <div class="stat-card">
+                    <span class="stat-label">Expiring Soon</span>
+                    <span class="stat-value" id="expiringSoon">0</span>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="life">Life</button>
+                <button class="filter-btn" data-filter="health">Health</button>
+                <button class="filter-btn" data-filter="vehicle">Vehicle</button>
+                <button class="filter-btn" data-filter="property">Property</button>
+            </div>
+
+            <div class="insurance-list" id="insuranceList"></div>
+        </section>
+
+        <!-- Vehicle View (NEW) -->
+        <section id="vehicleView" class="view">
+            <div class="vehicle-header">
+                <h2>🚗 Vehicle Manager</h2>
+                <button class="btn-primary" id="addVehicleBtn">+ Add Vehicle</button>
+            </div>
+
+            <div class="vehicle-grid" id="vehicleGrid"></div>
+        </section>
+
+        <!-- Subscription View (NEW) -->
+        <section id="subscriptionView" class="view">
+            <div class="subscription-header">
+                <h2>📺 Subscription Manager</h2>
+                <button class="btn-primary" id="addSubscriptionBtn">+ Add Subscription</button>
+            </div>
+
+            <div class="subscription-summary">
+                <div class="summary-card-sub">
+                    <h4>Monthly Cost</h4>
+                    <div class="amount-large" id="monthlySubCost">Rs. 0</div>
+                </div>
+                <div class="summary-card-sub">
+                    <h4>Annual Cost</h4>
+                    <div class="amount-large" id="annualSubCost">Rs. 0</div>
+                </div>
+                <div class="summary-card-sub">
+                    <h4>Active Subscriptions</h4>
+                    <div class="amount-large" id="activeSubCount">0</div>
+                </div>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="all">All</button>
+                <button class="filter-btn" data-filter="active">Active</button>
+                <button class="filter-btn" data-filter="paused">Paused</button>
+                <button class="filter-btn" data-filter="cancelled">Cancelled</button>
+            </div>
+
+            <div class="subscription-list" id="subscriptionList"></div>
+        </section>
+
+        <!-- Custom Manager View (NEW) -->
+        <section id="customView" class="view">
+            <div class="custom-header">
+                <h2>📋 Custom Data Manager</h2>
+                <button class="btn-primary" id="addCustomTypeBtn">+ New Type</button>
+            </div>
+
+            <div class="custom-types" id="customTypes"></div>
+
+            <div class="custom-items" id="customItems"></div>
+        </section>
+
+        <!-- Shopping View -->
+        <section id="shoppingView" class="view">
+            <div class="shopping-header">
+                <h2>🛒 Shopping List</h2>
+                <button class="btn-primary" id="addShoppingBtn">+ Add Item</button>
+            </div>
+
+            <div class="filter-section">
+                <button class="filter-btn active" data-filter="pending">Pending</button>
+                <button class="filter-btn" data-filter="purchased">Purchased</button>
+                <button class="filter-btn" data-filter="all">All</button>
+            </div>
+
+            <div class="shopping-list" id="shoppingList"></div>
+        </section>
+
+        <!-- Notes View -->
+        <section id="notesView" class="view">
+            <div class="notes-header">
+                <h2>📝 Notes & Reminders</h2>
+                <button class="btn-primary" id="addNoteBtn">+ Add Note</button>
+            </div>
+
+            <div class="upcoming-reminders" id="upcomingReminders">
+                <h3>🔔 Upcoming Reminders</h3>
+                <div id="remindersList"></div>
+            </div>
+
+            <div class="notes-list" id="notesList"></div>
+        </section>
+
+        <!-- Settings View -->
+        <section id="settingsView" class="view">
+            <div class="settings-container">
+                <h2>⚙️ Settings</h2>
+
+                <!-- Theme Toggle -->
+                <div class="setting-item">
+                    <label>
+                        <input type="checkbox" id="darkModeToggle">
+                        <span>🌙 Dark Mode</span>
+                    </label>
+                </div>
+
+                <!-- Currency Settings -->
+                <div class="setting-section">
+                    <h3>💱 Currency Settings</h3>
+                    <div class="setting-item">
+                        <label>Default Currency</label>
+                        <select id="defaultCurrency">
+                            <option value="NPR">NPR (रू)</option>
+                            <option value="USD">USD ($)</option>
+                            <option value="EUR">EUR (€)</option>
+                            <option value="INR">INR (₹)</option>
+                        </select>
+                    </div>
+                    <div class="setting-item">
+                        <label>
+                            <input type="checkbox" id="autoConvertToggle">
+                            <span>Auto-convert to NPR</span>
+                        </label>
+                    </div>
+                    <button class="btn-secondary" id="updateRatesBtn">🔄 Update Exchange Rates</button>
+                </div>
+
+                <!-- Tax Calculator -->
+                <div class="setting-section">
+                    <h3>📋 Nepal Tax Calculator</h3>
+                    <div class="form-group">
+                        <label>Annual Income (NPR)</label>
+                        <input type="number" id="taxIncome" placeholder="Enter annual income">
+                    </div>
+                    <div class="form-group">
+                        <label>Marital Status</label>
+                        <select id="taxMaritalStatus">
+                            <option value="single">Single</option>
+                            <option value="married">Married</option>
+                        </select>
+                    </div>
+                    <button class="btn-primary" id="calculateTaxBtn">Calculate Tax</button>
+                    <div id="taxResult" class="tax-result"></div>
+                </div>
+
+                <!-- Holiday Management -->
+                <div class="setting-section">
+                    <h3>🎉 Holiday Management</h3>
+                    <button class="btn-primary" id="addHolidayBtn">+ Add Holiday</button>
+                    <button class="btn-secondary" id="importHolidayBtn">📥 Import CSV</button>
+                    <input type="file" id="holidayFileInput" accept=".csv" hidden>
+                    <div class="holiday-list" id="holidayList"></div>
+                </div>
+
+                <!-- Data Management -->
+                <div class="setting-section">
+                    <h3>💾 Data Management</h3>
+                    <button class="btn-secondary" id="exportDataBtn">📤 Export All Data</button>
+                    <button class="btn-secondary" id="importDataBtn">📥 Import Data</button>
+                    <input type="file" id="dataFileInput" accept=".json" hidden>
+                    <button class="btn-danger" id="clearDataBtn">🗑️ Clear All Data</button>
+                </div>
+
+                <!-- App Info -->
+                <div class="setting-section">
+                    <h3>ℹ️ About</h3>
+                    <p><strong>App:</strong> Nepali Calendar 2082–2092 Complete Manager</p>
+                    <p><strong>Version:</strong> 2.0.0</p>
+                    <p><strong>Modules:</strong> Calendar, Finance, Insurance, Vehicle, Subscriptions, Custom Data</p>
+                    <p><strong>Developer:</strong> Santosh Phuyal</p>
+                    <p><strong>Email:</strong> xyz@gmail.com</p>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <!-- Floating Action Button -->
+    <div class="fab" id="fab">
+        <button class="fab-button">+</button>
+        <div class="fab-menu" id="fabMenu">
+            <button class="fab-item" data-action="income">💵 Income</button>
+            <button class="fab-item" data-action="expense">💸 Expense</button>
+            <button class="fab-item" data-action="note">📝 Note</button>
+            <button class="fab-item" data-action="bill">💳 Bill</button>
+            <button class="fab-item" data-action="goal">🎯 Goal</button>
+            <button class="fab-item" data-action="insurance">🛡️ Insurance</button>
+            <button class="fab-item" data-action="vehicle">🚗 Vehicle</button>
+            <button class="fab-item" data-action="subscription">📺 Subscription</button>
+        </div>
+    </div>
+
+    <!-- Modal Container -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <span class="modal-close">&times;</span>
+            <div id="modalBody"></div>
+        </div>
+    </div>
+
+    <!-- Date Detail Drawer -->
+    <div class="drawer" id="dateDrawer">
+        <div class="drawer-content">
+            <div class="drawer-header">
+                <h3 id="drawerTitle">Date Details</h3>
+                <button class="drawer-close">&times;</button>
+            </div>
+            <div class="drawer-body" id="drawerBody"></div>
+        </div>
+    </div>
+
+        <!-- Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="conversion.js"></script>
+    <script src="db.js"></script>
+    <script src="charts.js"></script>
+    <script src="budget.js"></script>
+    <script src="insurance.js"></script>
+    <script src="vehicle.js"></script>
+    <script src="subscription.js"></script>
+    <script src="custom.js"></script>
+    <script src="app.js"></script>
+    
+    <!-- Service Worker Registration - FIXED -->
+    <script>
+        // Only register service worker if running on http/https (not file://)
+        if ('serviceWorker' in navigator && window.location.protocol !== 'file:') {
+            window.addEventListener('load', () => {
+                navigator.serviceWorker.register('service-worker.js')
+                    .then(reg => {
+                        console.log('✅ Service Worker Registered', reg.scope);
+                    })
+                    .catch(err => {
+                        console.log('❌ Service Worker Registration Failed', err);
+                    });
+            });
+        } else if (window.location.protocol === 'file:') {
+            console.log('⚠️ Service Worker not registered (file:// protocol)');
+            console.log('📌 Run on local server for full PWA features:');
+            console.log('   python -m http.server 8000');
+            console.log('   Then open: http://localhost:8000');
+        }
+    </script>
+    
+    <!-- Load Verification -->
+    <script>
+        console.log('=== SCRIPT LOAD CHECK ===');
+        console.log('Chart.js loaded:', typeof Chart !== 'undefined');
+        console.log('conversion.js loaded:', typeof getCurrentNepaliDate !== 'undefined');
+        console.log('db.js loaded:', typeof initDB !== 'undefined');
+        console.log('charts.js loaded:', typeof renderTrendChart !== 'undefined');
+        console.log('budget.js loaded:', typeof updateBudgetOverview !== 'undefined');
+        console.log('insurance.js loaded:', typeof showInsuranceForm !== 'undefined');
+        console.log('vehicle.js loaded:', typeof showVehicleForm !== 'undefined');
+        console.log('subscription.js loaded:', typeof showSubscriptionForm !== 'undefined');
+        console.log('custom.js loaded:', typeof showCustomTypeForm !== 'undefined');
+        console.log('app.js loaded:', typeof renderCalendar !== 'undefined');
+        console.log('=== END LOAD CHECK ===');
+    </script>
+</body>
+</html>

@@ -1,0 +1,45 @@
+{
+  "name": "Nepali Calendar 2082–2092 Complete Manager",
+  "short_name": "Nepali Cal",
+  "description": "Complete Nepali Calendar with Finance, Insurance, Vehicle, Subscription, and Custom Data Management",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#F5F7FA",
+  "theme_color": "#4A90E2",
+  "orientation": "portrait-primary",
+  "categories": ["productivity", "finance", "utilities"],
+  "icons": [
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%234A90E2'/><text x='96' y='120' font-size='80' text-anchor='middle' fill='white'>📅</text></svg>",
+      "sizes": "192x192",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%234A90E2'/><text x='256' y='320' font-size='200' text-anchor='middle' fill='white'>📅</text></svg>",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}
+  ],
+  "developer": {
+    "name": "Santosh Phuyal",
+    "email": "xyz@gmail.com"
+  },
+  "version": "2.0.0",
+  "features": [
+    "Calendar (BS 2082-2092)",
+    "Income & Expense Tracking",
+    "Budget Planning",
+    "Bill Reminders",
+    "Savings Goals",
+    "Insurance Manager",
+    "Vehicle Manager",
+    "Subscription Manager",
+    "Custom Data Manager",
+    "Multi-currency Support",
+    "Offline-first PWA"
+  ]
+}

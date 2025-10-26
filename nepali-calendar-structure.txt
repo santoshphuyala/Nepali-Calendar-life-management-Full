@@ -1,0 +1,15 @@
+nepali-calendar-pwa/
+├── index.html (COMPLETE REWRITE)
+├── style.css (UPDATED)
+├── app.js (UPDATED)
+├── db.js (UPDATED)
+├── conversion.js (SAME)
+├── charts.js (SAME)
+├── budget.js (SAME)
+├── insurance.js (NEW)
+├── vehicle.js (NEW)
+├── subscription.js (NEW)
+├── custom.js (NEW)
+├── manifest.json (UPDATED)
+├── service-worker.js (UPDATED)
+└── icons/
